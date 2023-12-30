@@ -42,15 +42,18 @@ app.delete(
   })
 );
 
-app.post("/listings/:id/reviews",wrapAsync( async (req, res) => {
-  let listing = await Listing.findById(req.params.id);
-  let newReview = new Review(req.body.review);
+app.post(
+  "/listings/:id/reviews",
+  wrapAsync(async (req, res) => {
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
 
-  listing.reviews.push(newReview);
-  await newReview.save();
-  await listing.save();
-  res.redirect(`/listings/${listing._id}`);
-}));
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${listing._id}`);
+  })
+);
 
 //NEW ROUTE
 app.get(
@@ -86,8 +89,19 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const list = await Listing.findById(id);
+    const list = await Listing.findById(id).populate("reviews");
     res.render("./listings/show.ejs", { list });
+  })
+);
+
+// Delete review route
+app.delete(
+  "/listings/:id/reviews/:reviewId",
+  wrapAsync(async (req, res) => {
+    let { id, reviewId } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
   })
 );
 
@@ -144,8 +158,6 @@ app.use((err, req, res, next) => {
 
   // res.status(status).send(message);
 });
-
-
 
 app.listen(8080, () => {
   console.log("server is listening on 8080");
