@@ -16,10 +16,14 @@ async function main() {
   await mongoose.connect(MongoUrl);
 }
 
-const initDB = async()=>{
-    await Listing.deleteMany({});
-    await Listing.insertMany(initData.data)
-    console.log('data was initilised');
-}
+const initDB = async () => {
+  await Listing.deleteMany({});
+  initData.data = initData.data.map((obj) => ({
+    ...obj,
+    owner: "65941c9c2ab0e82237fee0a7",
+  }));
+  await Listing.insertMany(initData.data);
+  console.log("data was initilised");
+};
 
 initDB();

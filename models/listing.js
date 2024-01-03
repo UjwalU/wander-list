@@ -19,10 +19,17 @@ const listingSchema = new mongoose.Schema({
   price: Number,
   location: String,
   country: String,
-  reviews: [{
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+  // adding owner for adding authorization
+  owner: {
     type: Schema.Types.ObjectId,
-    ref: "Review",
-  }],
+    ref: "User",
+  },
 });
 
 const Listing = mongoose.model("Listing", listingSchema);

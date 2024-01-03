@@ -16,6 +16,8 @@
           <b>Country :</b> <%= list.country %> <br />
         </p>
       </div>
+      <%/* to add a autherization we are comparing the id of a current user and
+      id of the owner */ %>
       <div class="btns">
         <a href="/listings/<%= list._id  %>/edit" class="btn btn-dark mt-2"
           >Edit</a
@@ -25,6 +27,7 @@
           <button class="btn btn-dark mt-2">Delete</button>
         </form>
       </div>
+
       <br />
       <hr />
 
