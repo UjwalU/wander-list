@@ -17,7 +17,8 @@
         </p>
       </div>
       <%/* to add a autherization we are comparing the id of a current user and
-      id of the owner */ %>
+      id of the owner */ %> <% if(currUser &&
+      list.owner._id.equals(currUser._id)){ %>
       <div class="btns">
         <a href="/listings/<%= list._id  %>/edit" class="btn btn-dark mt-2"
           >Edit</a
@@ -27,12 +28,13 @@
           <button class="btn btn-dark mt-2">Delete</button>
         </form>
       </div>
-
+      <% } %>
       <br />
       <hr />
 
       <div class="card col-30 listing-card">
         <br />
+        <% if(currUser){ %>
         <h4>Leave a Review</h4>
         <br />
         <form
@@ -72,13 +74,14 @@
         </form>
         <br />
         <hr />
+        <% } %>
         <h4>All reviews</h4>
         <br />
         <div class="row">
           <% for(review of list.reviews){ %>
           <div class="card col-5 ms-3 mb-3">
             <div class="card-body">
-              <h5 class="card-title">User</h5>
+              <h5 class="card-title">@<%= review.author.username %></h5>
               <p class="card-text"><%= review.comment %></p>
               <p class="card-text"><%= review.rating %> Stars</p>
             </div>
