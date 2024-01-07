@@ -5,7 +5,13 @@
     <body>
       <h1>Edit Listings</h1>
       <br />
-      <form action="/listings/<%= list._id  %>?_method=PUT" method="post" novalidate class="needs-validation">
+      <form
+        action="/listings/<%= list._id  %>?_method=PUT"
+        method="post"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
         <div class="mb-4">
           <label for="title" class="form-label">Title </label>
           <input
@@ -15,9 +21,7 @@
             class="form-control"
             required
           />
-          <div class="valid-feedback">
-            New Title Looks good!
-          </div>
+          <div class="valid-feedback">New Title Looks good!</div>
         </div>
         <br />
         <div class="div">
@@ -30,23 +34,16 @@
           >
     <%= list.description %></textarea
           >
-          <div class="invalid-feedback">
-            Description cannot be Empty
-          </div>
+          <div class="invalid-feedback">Description cannot be Empty</div>
         </div>
         <br />
         <div>
-          <label for="image" class="form-label">Image </label>
-          <input
-            type="text"
-            name="image"
-            value="<%= list.image %>"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">
-            Please Provide an image
-          </div>
+          Original Listing Image <br />
+          <img src="<%= neworiginalImg  %> " class="editImg" />
+        </div>
+        <div>
+          <label for="image" class="form-label">Uplode new Image </label>
+          <input type="file" name="image" class="form-control" />
         </div>
         <br />
 
@@ -59,9 +56,8 @@
               value="<%= list.price %>"
               class="form-control"
               required
-            /><div class="invalid-feedback">
-              Price needed
-            </div>
+            />
+            <div class="invalid-feedback">Price needed</div>
           </div>
           <div class="mb-4 col-md-8">
             <label for="country" class="form-label">Country </label>
@@ -71,9 +67,8 @@
               value="<%= list.country %>"
               class="form-control"
               required
-            /><div class="invalid-feedback">
-              Country name needed
-            </div>
+            />
+            <div class="invalid-feedback">Country name needed</div>
           </div>
         </div>
         <br />
@@ -87,9 +82,7 @@
             class="form-control"
             required
           />
-          <div class="invalid-feedback">
-            Location is needed
-          </div>
+          <div class="invalid-feedback">Location is needed</div>
         </div>
         <br />
         <button class="btn btn-dark">Edit</button>

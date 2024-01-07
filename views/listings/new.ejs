@@ -10,6 +10,7 @@
         method="post"
         novalidate
         class="needs-validation"
+        enctype="multipart/form-data"
       >
         <div class="mb-4">
           <label for="title" class="form-label">Title </label>
@@ -35,22 +36,19 @@
         </div>
         <br />
         <div class="mb-4">
-          <lable for="image" class="form-label">Image Url </lable>
-          <input
-            type="text"
-            name="image"
-            placeholder="Enter Image Url"
-            class="form-control"
-          />
+          <label for="image" class="form-label">Upload Image </label>
+          <input type="file" name="image" class="form-control" required />
         </div>
+
         <br />
         <div class="row">
           <div class="mb-4 col-md-4">
             <lable for="price" class="form-label">Price </lable>
-            <input name="price"
-            placeholder="Enter Price"
-            class="form-control"
-            required
+            <input
+              name="price"
+              placeholder="Enter Price"
+              class="form-control"
+              required
             />
             <div class="invalid-feedback">Please enter a valid Price</div>
           </div>
