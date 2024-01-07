@@ -10,44 +10,31 @@ const { storage } = require("../cloudconfig.js");
 const upload = multer({ storage });
 const cloudinary = require("cloudinary").v2;
 
+router
+  .route("/")
+  .get(wrapAsync(listingController.index))
+  .post(
+    isLoggedIn,
+    upload.single("image"),
+    wrapAsync(listingController.createListing)
+  );
 //NEW ROUTE
 router.get("/new", isLoggedIn, wrapAsync(listingController.renderNewForm));
-//
-router.post(
-  "/",
-  isLoggedIn,
-  upload.single("image"),
-  wrapAsync(listingController.createListing)
-);
 
-// SHOW ROUTE
-router.get("/:id", wrapAsync(listingController.showListing));
-
-// Delete Route
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.deleteListing)
-);
+router
+  .route("/:id")
+  .get(wrapAsync(listingController.showListing))
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("image"),
+    wrapAsync(listingController.editListing)
+  )
+  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
 // Edit route
-router.get(
-  "/:id/edit",
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.renderEditForm)
-);
-
-router.put(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  upload.single("image"),
-  wrapAsync(listingController.editListing)
-);
-
-// index route
-router.get("/", wrapAsync(listingController.index));
+router
+  .route("/:id/edit")
+  .get(isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm));
 
 module.exports = router;
